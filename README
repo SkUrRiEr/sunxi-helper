@@ -1,0 +1,9 @@
+Sunxi Helper
+
+This is a web application to assist people to add their boards to the
+sunxi-boards and u-boot-sunxi repositories.
+
+Rough layout:
+memdump/	tools to parse memdumps
+fex/		tools to parse fex/bin files
+ui/		user interface
