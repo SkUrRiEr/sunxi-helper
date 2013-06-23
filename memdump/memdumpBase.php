@@ -17,4 +17,14 @@ class memdumpBase {
 	public $dram_emr1;
 	public $dram_emr2;
 	public $dram_emr3;
+
+	public function __construct($data) {
+		foreach($data as $k => $v)
+			if( property_exists($this, $k) ) {
+				if( preg_match("/^0x([[:digit:]abcdef]*)$/", $v, $regs) )
+					$v = hexdec($regs[1]);
+
+				$this->$k = $v;
+			}
+	}
 }
