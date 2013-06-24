@@ -7,3 +7,7 @@ Rough layout:
 memdump/	tools to parse memdumps
 fex/		tools to parse fex/bin files
 ui/		user interface
+
+Commandline Tools:
+parse_memdump.php	This reads in a text based memdump then re-emits it in the
+			same format. This is a test of the parser tool.
