@@ -10,10 +10,13 @@ class memdumpBase {
 	public $cas;
 	public $zq;
 	public $odt_en;
+	public $size;
 	public $tpr0;
 	public $tpr1;
 	public $tpr2;
 	public $tpr3;
+	public $tpr4;
+	public $tpr5;
 	public $emr1;
 	public $emr2;
 	public $emr3;
@@ -34,10 +37,13 @@ class memdumpBase {
 			"cas" => false,
 			"zq" => true,
 			"odt_en" => false,
+			"size" => false,
 			"tpr0" => true,
 			"tpr1" => true,
 			"tpr2" => true,
 			"tpr3" => true,
+			"tpr4" => true,
+			"tpr5" => true,
 			"emr1" => true,
 			"emr2" => true,
 			"emr3" => true
