@@ -20,7 +20,14 @@ if( !$f )
 	usage("Cannot open specified file");
 
 require_once("memdump/flatFile.php");
+require_once("memdump/cFile.php");
 
-$memdump = new flatFile($f);
+$line = fgets($f);
+fseek($f, 0);
+
+if( preg_match("/^dram_/", $line) )
+	$memdump = new flatFile($f);
+else
+	$memdump = new cFile($f);
 
 echo $memdump->getMemdump();
