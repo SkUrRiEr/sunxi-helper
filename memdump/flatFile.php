@@ -7,7 +7,7 @@ class flatFile extends memdumpBase {
 		$data = array();
 
 		while($line = fgets($fd))
-			if( preg_match("/^([[:alnum:]_]*)\s*=\s*([[:digit:]abcdefx]*)\s*$/", $line, $regs) )
+			if( preg_match("/^dram_([[:alnum:]_]*)\s*=\s*([[:digit:]abcdefx]*)\s*$/", $line, $regs) )
 				$data[$regs[1]] = $regs[2];
 
 		parent::__construct($data);
