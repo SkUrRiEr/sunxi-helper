@@ -8,26 +8,59 @@ function usage($e) {
 	exit(1);
 }
 
-if( $_SERVER["argc"] != 2 )
+if( $_SERVER["argc"] < 2 )
 	usage("Incorrect arguments specified");
 
 if( !file_exists($_SERVER["argv"][1]) )
 	usage("Cannot find file specified");
 
-$f = fopen($_SERVER["argv"][1], "r");
-
-if( !$f )
-	usage("Cannot open specified file");
-
 require_once("memdump/flatFile.php");
 require_once("memdump/cFile.php");
 
-$line = fgets($f);
-fseek($f, 0);
+$dumps = array();
+$names = array();
 
-if( preg_match("/^dram_/", $line) )
-	$memdump = new flatFile($f);
-else
-	$memdump = new cFile($f);
+foreach($_SERVER["argv"] as $i => $f) {
+	if( $i == 0 )
+		continue;
 
-echo $memdump->getMemdump();
+	$fd = fopen($f, "r");
+
+	if( !$fd )
+		echo "Cannot open ".$f."\n";
+
+	$names[] = $f;
+
+	$line = fgets($fd);
+	fseek($fd, 0);
+
+	if( preg_match("/^dram_/", $line) )
+		$dumps[] = new flatFile($fd);
+	else
+		$dumps[] = new cFile($fd);
+}
+
+if( count($dumps) > 1 ) {
+	echo "Comparison Matrix:\n";
+
+	$ll = 0;
+
+	foreach($names as $n)
+		if( strlen($n) > $ll )
+			$ll = strlen($n);
+
+	echo sprintf("%-".$ll."s | ", "").implode(array_keys($names), " | ")." |\n";
+
+	foreach($dumps as $i => $x) {
+		$cmp = array();
+
+		foreach($dumps as $y)
+			$cmp[] = $x->equal($y) ? "x" : " ";
+
+		echo sprintf("%-".$ll."s | ", $names[$i]).implode($cmp, " | ")." |\n";
+	}
+
+	echo "\nFirst parsed file:\n";
+}
+
+echo $dumps[0]->getMemdump();

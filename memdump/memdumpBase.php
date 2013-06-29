@@ -69,4 +69,12 @@ class memdumpBase {
 
 		return $output;
 	}
+
+	public function equal(memdumpBase $x) {
+		foreach($this->structure as $k => $bool)
+			if( isset($this->$k) != isset($x->$k) || $this->$k != $x->$k )
+				return false;
+
+		return true;
+	}
 }
