@@ -3,6 +3,8 @@ Sunxi Helper
 This is a web application to assist people to add their boards to the
 sunxi-boards and u-boot-sunxi repositories.
 
+It is licensed under the GPL version 2. See COPYING for details.
+
 Rough layout:
 memdump/	tools to parse memdumps
 fex/		tools to parse fex/bin files
