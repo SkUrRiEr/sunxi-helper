@@ -12,7 +12,10 @@ ui/		user interface
 
 Commandline Tools:
 parse_memdump.php	This reads in a text based memdumps or dram_*.c files
-			then re-emits the data contained in the flat file
-			format. If multiple files are specified, a comparison
-			matrix is also printed marking which ones are equal.
+			then re-emits the data from the first file in the flat
+			file format. If multiple files are specified, a
+			comparison matrix is also printed marking which ones
+			are equal. If you specify a template file (*.tpl) it
+			will use that template to emit the data instead of
+			using the standard flat file format.
 			This is a test of the low-level functionality.

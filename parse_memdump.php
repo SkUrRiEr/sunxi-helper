@@ -3,7 +3,7 @@
 function usage($e) {
 	$f = fopen("php://stderr", "w");
 
-	fputs($f, $_SERVER["argv"][0]." <memdump>\n\n".$e."\n\n");
+	fputs($f, $_SERVER["argv"][0]." <memdump>...\n\nIf you specify a template (*.tpl) on the command line, it will be used to\noutput the memdump.\n\n".$e."\n\n");
 
 	exit(1);
 }
@@ -29,16 +29,23 @@ foreach($_SERVER["argv"] as $i => $f) {
 	if( !$fd )
 		echo "Cannot open ".$f."\n";
 
-	$names[] = $f;
+	if( preg_match("/\.tpl$/", $f) )
+		$tpl = $fd;
+	else {
+		$names[] = $f;
 
-	$line = fgets($fd);
-	fseek($fd, 0);
+		$line = fgets($fd);
+		fseek($fd, 0);
 
-	if( preg_match("/^dram_/", $line) )
-		$dumps[] = new flatFile($fd);
-	else
-		$dumps[] = new cFile($fd);
+		if( preg_match("/^dram_/", $line) )
+			$dumps[] = new flatFile($fd);
+		else
+			$dumps[] = new cFile($fd);
+	}
 }
+
+if( count($dumps) == 0 )
+	usage("No memdumps specified.");
 
 if( count($dumps) > 1 ) {
 	echo "Comparison Matrix:\n";
@@ -63,4 +70,7 @@ if( count($dumps) > 1 ) {
 	echo "\nFirst parsed file:\n";
 }
 
-echo $dumps[0]->getMemdump();
+if( isset($tpl) )
+	echo $dumps[0]->getByTemplate($tpl);
+else
+	echo $dumps[0]->getMemdump();

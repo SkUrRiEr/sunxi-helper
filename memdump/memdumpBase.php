@@ -70,6 +70,32 @@ class memdumpBase {
 		return $output;
 	}
 
+	public function getByTemplate($fd) {
+		$output = "";
+
+		while($line = fgets($fd)) {
+			while(preg_match("/^([^<]*)<([^>]*)>(.*)$/", $line, $regs)) {
+				$output .= $regs[1];
+
+				if(isset($this->structure[$regs[2]])) {
+					$k = $regs[2];
+
+					if( $this->structure[$k] )
+						$output .= sprintf("0x%0x", $this->$k);
+					else
+						$output .= sprintf("%d", $this->$k);
+				} else
+					$output .= "<".$regs[2].">";
+
+				$line = $regs[3];
+			}
+
+			$output .= $line."\n";
+		}
+
+		return $output;
+	}
+
 	public function equal(memdumpBase $x) {
 		foreach($this->structure as $k => $bool)
 			if( isset($this->$k) != isset($x->$k) || $this->$k != $x->$k )
