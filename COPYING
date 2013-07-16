@@ -16,8 +16,9 @@ produced are derived works of this content and should be licensed
 and copyrighted as appropriate.
 
   Also note that the GPL below is copyrighted by the Free Software
-Foundation, but the instance of code that it refers to (the U-Boot
-source code) is copyrighted by me and others who actually wrote it.
+Foundation, but the instance of code that it refers to (the
+sunxi-helper source code) is copyrighted by me and others who
+actually wrote it.
 
   This file is derived from the COPYING file provided with U-Boot.
 
